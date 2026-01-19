@@ -8,53 +8,103 @@
 <link rel="manifest" href="manifest.json">
 
 <style>
+/* =======================
+   QATRI FLAG THEME
+======================= */
 :root {
+  --maroon: #8A1538;
+  --gold: #C9A14A;
   --bg: #faf7f2;
-  --text: #1c1c1c;
-  --accent: #b89b5e;
   --card: #ffffff;
+  --text: #1c1c1c;
 }
 [data-theme="dark"] {
   --bg: #0f1115;
-  --text: #f5f5f5;
   --card: #1a1d23;
+  --text: #f5f5f5;
 }
-* { box-sizing: border-box; margin:0; padding:0; font-family: 'Segoe UI', sans-serif; }
-body { background: var(--bg); color: var(--text); overflow-x:hidden; }
 
+* { box-sizing: border-box; margin:0; padding:0; }
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* =======================
+   HEADER
+======================= */
 header {
-  position: fixed; top:0; left:0; right:0;
+  position: fixed;
+  top:0; left:0; right:0;
   background: rgba(255,255,255,0.9);
   backdrop-filter: blur(10px);
-  display:flex; justify-content:space-between; align-items:center;
-  padding:15px 20px; z-index:1000;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 20px;
+  z-index:1000;
 }
-[data-theme="dark"] header { background: rgba(15,17,21,0.9); }
+[data-theme="dark"] header {
+  background: rgba(15,17,21,0.9);
+}
 
-nav a {
-  margin:0 10px; text-decoration:none; color:var(--text);
-  font-weight:600; cursor:pointer;
+.logo {
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
-nav a:hover { color: var(--accent); }
+.logo img {
+  width:40px;
+  height:40px;
+  border-radius:50%;
+}
+nav a {
+  margin:0 10px;
+  cursor:pointer;
+  text-decoration:none;
+  color:var(--text);
+  font-weight:600;
+}
+nav a:hover { color: var(--maroon); }
 
 .toggle {
-  cursor:pointer; font-size:14px;
+  cursor:pointer;
+  font-size:14px;
 }
 
-section { padding:100px 20px; display:none; }
-section.active { display:block; animation: fade .6s ease; }
-
+/* =======================
+   SECTIONS
+======================= */
+section {
+  padding:100px 20px;
+  display:none;
+}
+section.active {
+  display:block;
+  animation: fade .5s ease;
+}
 @keyframes fade {
   from { opacity:0; transform:translateY(10px); }
   to { opacity:1; transform:none; }
 }
 
+/* =======================
+   HERO
+======================= */
 .hero {
   text-align:center;
 }
-.hero h1 { font-size:2.5rem; margin-bottom:10px; }
-.hero p { opacity:0.8; }
+.hero h1 {
+  font-size:2.5rem;
+}
+.hero p {
+  opacity:0.8;
+}
 
+/* =======================
+   PRODUCTS
+======================= */
 .products {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -66,85 +116,186 @@ section.active { display:block; animation: fade .6s ease; }
   overflow:hidden;
   transition:.3s;
 }
-.product:hover { transform:scale(1.03); }
-.product img { width:100%; height:280px; object-fit:cover; }
-.product div { padding:15px; }
+.product:hover {
+  transform:scale(1.04);
+}
+.product img {
+  width:100%;
+  height:280px;
+  object-fit:cover;
+}
+.product div {
+  padding:15px;
+}
 button {
-  background:var(--accent);
-  border:none; padding:10px; width:100%;
-  color:#fff; cursor:pointer; border-radius:8px;
+  background:var(--maroon);
+  color:#fff;
+  border:none;
+  padding:10px;
+  width:100%;
+  border-radius:8px;
+  cursor:pointer;
+}
+button:hover {
+  background:var(--gold);
+  color:#000;
 }
 
+/* =======================
+   CART
+======================= */
 .cart-btn {
-  position:fixed; bottom:20px; right:20px;
-  background:var(--accent); color:#fff;
-  width:55px; height:55px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-weight:bold; cursor:pointer; z-index:999;
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:55px;
+  height:55px;
+  background:var(--maroon);
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  cursor:pointer;
+  z-index:999;
 }
 .cart-count {
-  position:absolute; top:-5px; right:-5px;
-  background:red; color:#fff;
-  width:22px; height:22px; border-radius:50%;
-  font-size:12px; display:flex; align-items:center; justify-content:center;
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  width:22px;
+  height:22px;
+  background:red;
+  color:#fff;
+  border-radius:50%;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .cart-drawer {
-  position:fixed; right:-100%; top:0; height:100%;
-  width:320px; background:var(--card);
-  padding:20px; transition:.4s; z-index:1001;
+  position:fixed;
+  top:0;
+  right:-100%;
+  width:320px;
+  height:100%;
+  background:var(--card);
+  padding:20px;
+  transition:.4s;
+  z-index:1001;
 }
 .cart-drawer.open { right:0; }
-.cart-item { margin-bottom:10px; font-size:14px; }
+.cart-item {
+  font-size:14px;
+  margin-bottom:8px;
+}
 
+/* =======================
+   FORM
+======================= */
 input, textarea {
-  width:100%; padding:10px; margin-bottom:10px;
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
 }
 
-.qr {
-  width:200px; margin:10px auto; display:block;
-}
-
+/* =======================
+   FOOTER
+======================= */
 footer {
-  text-align:center; padding:20px; opacity:0.6;
+  text-align:center;
+  padding:20px;
+  opacity:0.6;
 }
 </style>
 </head>
 
 <body>
+
 <header>
-  <strong>The Qatri Abaya</strong>
+  <div class="logo">
+    <!-- Replace this logo later -->
+    <img src="https://via.placeholder.com/40x40?text=Q" alt="Qatri Logo">
+    <strong>The Qatri Abaya</strong>
+  </div>
+
   <nav>
     <a onclick="show('home')">Home</a>
     <a onclick="show('products')">Products</a>
     <a onclick="show('checkout')">Checkout</a>
+    <a onclick="show('admin')" style="opacity:.6">Admin</a>
   </nav>
+
   <span class="toggle" onclick="toggleTheme()">🌓</span>
 </header>
 
+<!-- =======================
+     HOME
+======================= -->
 <section id="home" class="active hero">
   <h1>Elegant Abayas</h1>
-  <p>Modesty. Grace. Comfort.</p>
+  <p>Inspired by Modesty & Grace</p>
 </section>
 
+<!-- =======================
+     PRODUCTS
+======================= -->
 <section id="products">
   <h2>Our Collection</h2>
   <div class="products" id="productList"></div>
 </section>
 
+<!-- =======================
+     CHECKOUT
+======================= -->
 <section id="checkout">
   <h2>Checkout</h2>
+
   <input id="name" placeholder="Your Name">
   <input id="phone" placeholder="Phone Number">
   <textarea id="address" placeholder="Delivery Address"></textarea>
 
   <h3>UPI Payment</h3>
-  <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=googlepay://upi/pay?pa=YOUR_UPI_ID" />
+
+  <!-- Replace YOUR_UPI_ID later -->
+  <img
+    src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=googlepay://upi/pay?pa=YOUR_UPI_ID"
+    style="width:200px;display:block;margin:10px auto;"
+  >
+
   <input value="YOUR_UPI_ID" readonly>
 
   <button onclick="pay()">Pay Now</button>
 </section>
 
+<!-- =======================
+     ADMIN
+======================= -->
+<section id="admin">
+  <h2>Admin Panel</h2>
+
+  <input type="password" id="adminPass" placeholder="Admin Password">
+  <button onclick="loginAdmin()">Login</button>
+
+  <div id="adminArea" style="display:none;margin-top:20px">
+    <h3>Add Product</h3>
+
+    <input id="pName" placeholder="Product Name">
+    <input id="pPrice" type="number" placeholder="Price">
+    <input id="pImg" placeholder="Image URL">
+
+    <button onclick="addProduct()">Save Product</button>
+
+    <h3 style="margin-top:20px">Existing Products</h3>
+    <div id="adminProducts"></div>
+  </div>
+</section>
+
+<!-- =======================
+     CART UI
+======================= -->
 <div class="cart-btn" onclick="toggleCart()">
   🛒
   <div class="cart-count" id="cartCount">0</div>
@@ -159,81 +310,151 @@ footer {
 <footer>© 2026 The Qatri Abaya</footer>
 
 <script>
-const products = [
+/* =======================
+   DATA
+======================= */
+const ADMIN_PASSWORD = "qatri123"; // change this
+
+const defaultProducts = [
  {id:1,name:"Embroidered Black Abaya",price:1999,img:"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb"},
  {id:2,name:"Classic Open Abaya",price:1499,img:"https://images.unsplash.com/photo-1593032465175-481ac7f401b5"},
  {id:3,name:"Luxury Dubai Abaya",price:2999,img:"https://images.unsplash.com/photo-1618354691373-2dc9d963dc3d"},
  {id:4,name:"Casual Daily Abaya",price:999,img:"https://images.unsplash.com/photo-1583394838336-acd977736f90"},
- {id:5,name:"Elegant Grey Abaya",price:1799,img:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519"},
- {id:6,name:"Floral Abaya",price:1899,img:"https://images.unsplash.com/photo-1612423284934-2850a0b6f06f"},
- {id:7,name:"Butterfly Abaya",price:2299,img:"https://images.unsplash.com/photo-1618354691254-0b19b6c65b03"},
- {id:8,name:"Nida Matte Abaya",price:1599,img:"https://images.unsplash.com/photo-1583391733981-24c9cda0b3e6"}
 ];
 
-let cart = JSON.parse(localStorage.getItem("cart")||"[]");
+let products = JSON.parse(localStorage.getItem("products")) || defaultProducts;
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+/* =======================
+   NAV
+======================= */
 function show(id){
- document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
- document.getElementById(id).classList.add("active");
+  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
+/* =======================
+   PRODUCTS
+======================= */
 function renderProducts(){
- const p=document.getElementById("productList");
- p.innerHTML="";
- products.forEach(pr=>{
-  p.innerHTML+=`
-  <div class="product">
-   <img src="${pr.img}">
-   <div>
-    <h4>${pr.name}</h4>
-    <p>₹${pr.price}</p>
-    <button onclick="add(${pr.id})">Add to Cart</button>
-   </div>
-  </div>`;
- });
+  const list = document.getElementById("productList");
+  list.innerHTML="";
+  products.forEach(p=>{
+    list.innerHTML += `
+      <div class="product">
+        <img src="${p.img}">
+        <div>
+          <h4>${p.name}</h4>
+          <p>₹${p.price}</p>
+          <button onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      </div>`;
+  });
 }
 
-function add(id){
- cart.push(products.find(p=>p.id===id));
- localStorage.setItem("cart",JSON.stringify(cart));
- updateCart();
+function addToCart(id){
+  cart.push(products.find(p=>p.id===id));
+  localStorage.setItem("cart",JSON.stringify(cart));
+  updateCart();
 }
 
+/* =======================
+   CART
+======================= */
 function updateCart(){
- document.getElementById("cartCount").innerText=cart.length;
- const ci=document.getElementById("cartItems");
- ci.innerHTML="";
- let sum=0;
- cart.forEach(c=>{
-  sum+=c.price;
-  ci.innerHTML+=`<div class="cart-item">${c.name} – ₹${c.price}</div>`;
- });
- document.getElementById("total").innerText="Total: ₹"+sum;
+  cartCount.innerText = cart.length;
+  cartItems.innerHTML="";
+  let sum=0;
+  cart.forEach(i=>{
+    sum+=i.price;
+    cartItems.innerHTML+=`<div class="cart-item">${i.name} – ₹${i.price}</div>`;
+  });
+  total.innerText="Total: ₹"+sum;
 }
-
 function toggleCart(){
- document.getElementById("cart").classList.toggle("open");
+  cart.classList.toggle("open");
 }
 
+/* =======================
+   PAYMENT
+======================= */
 function pay(){
- const msg=`New order from The Qatri Abaya
+  const msg =
+`New order - The Qatri Abaya
 Name: ${name.value}
 Phone: ${phone.value}
 Address: ${address.value}
-Items: ${cart.map(c=>c.name).join(", ")}
+Items: ${cart.map(i=>i.name).join(", ")}
 Total: ₹${cart.reduce((a,b)=>a+b.price,0)}
 Time: ${new Date().toLocaleString()}`;
- window.open(`https://wa.me/918759134555?text=${encodeURIComponent(msg)}`);
- alert("Payment successful! Order confirmed. Check WhatsApp for details.");
- localStorage.clear(); cart=[]; updateCart();
+
+  window.open(
+    "https://wa.me/918759134555?text="+encodeURIComponent(msg)
+  );
+
+  alert("Payment successful! Order confirmed. Check WhatsApp for details.");
+  localStorage.removeItem("cart");
+  cart=[];
+  updateCart();
 }
 
+/* =======================
+   ADMIN
+======================= */
+function loginAdmin(){
+  if(adminPass.value === ADMIN_PASSWORD){
+    adminArea.style.display="block";
+    adminPass.style.display="none";
+    renderAdmin();
+  } else alert("Wrong password");
+}
+
+function addProduct(){
+  products.push({
+    id:Date.now(),
+    name:pName.value,
+    price:Number(pPrice.value),
+    img:pImg.value
+  });
+  saveProducts();
+  renderProducts();
+  renderAdmin();
+}
+
+function deleteProduct(id){
+  products = products.filter(p=>p.id!==id);
+  saveProducts();
+  renderProducts();
+  renderAdmin();
+}
+
+function renderAdmin(){
+  adminProducts.innerHTML="";
+  products.forEach(p=>{
+    adminProducts.innerHTML+=`
+      <div>
+        ${p.name} – ₹${p.price}
+        <button onclick="deleteProduct(${p.id})">❌</button>
+      </div>`;
+  });
+}
+
+function saveProducts(){
+  localStorage.setItem("products",JSON.stringify(products));
+}
+
+/* =======================
+   THEME
+======================= */
 function toggleTheme(){
- document.body.dataset.theme=
- document.body.dataset.theme==="dark"?"":"dark";
+  document.body.dataset.theme =
+    document.body.dataset.theme === "dark" ? "" : "dark";
 }
 
-renderProducts(); updateCart();
+/* INIT */
+renderProducts();
+updateCart();
 </script>
+
 </body>
 </html>

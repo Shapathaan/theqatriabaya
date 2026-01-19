@@ -1,1 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Qatri Abaya</title>
 
+<link rel="manifest" href="manifest.json">
+
+<style>
+:root {
+  --bg: #faf7f2;
+  --text: #1c1c1c;
+  --accent: #b89b5e;
+  --card: #ffffff;
+}
+[data-theme="dark"] {
+  --bg: #0f1115;
+  --text: #f5f5f5;
+  --card: #1a1d23;
+}
+* { box-sizing: border-box; margin:0; padding:0; font-family: 'Segoe UI', sans-serif; }
+body { background: var(--bg); color: var(--text); overflow-x:hidden; }
+
+header {
+  position: fixed; top:0; left:0; right:0;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  display:flex; justify-content:space-between; align-items:center;
+  padding:15px 20px; z-index:1000;
+}
+[data-theme="dark"] header { background: rgba(15,17,21,0.9); }
+
+nav a {
+  margin:0 10px; text-decoration:none; color:var(--text);
+  font-weight:600; cursor:pointer;
+}
+nav a:hover { color: var(--accent); }
+
+.toggle {
+  cursor:pointer; font-size:14px;
+}
+
+section { padding:100px 20px; display:none; }
+section.active { display:block; animation: fade .6s ease; }
+
+@keyframes fade {
+  from { opacity:0; transform:translateY(10px); }
+  to { opacity:1; transform:none; }
+}
+
+.hero {
+  text-align:center;
+}
+.hero h1 { font-size:2.5rem; margin-bottom:10px; }
+.hero p { opacity:0.8; }
+
+.products {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+}
+.product {
+  background:var(--card);
+  border-radius:12px;
+  overflow:hidden;
+  transition:.3s;
+}
+.product:hover { transform:scale(1.03); }
+.product img { width:100%; height:280px; object-fit:cover; }
+.product div { padding:15px; }
+button {
+  background:var(--accent);
+  border:none; padding:10px; width:100%;
+  color:#fff; cursor:pointer; border-radius:8px;
+}
+
+.cart-btn {
+  position:fixed; bottom:20px; right:20px;
+  background:var(--accent); color:#fff;
+  width:55px; height:55px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:bold; cursor:pointer; z-index:999;
+}
+.cart-count {
+  position:absolute; top:-5px; right:-5px;
+  background:red; color:#fff;
+  width:22px; height:22px; border-radius:50%;
+  font-size:12px; display:flex; align-items:center; justify-content:center;
+}
+
+.cart-drawer {
+  position:fixed; right:-100%; top:0; height:100%;
+  width:320px; background:var(--card);
+  padding:20px; transition:.4s; z-index:1001;
+}
+.cart-drawer.open { right:0; }
+.cart-item { margin-bottom:10px; font-size:14px; }
+
+input, textarea {
+  width:100%; padding:10px; margin-bottom:10px;
+}
+
+.qr {
+  width:200px; margin:10px auto; display:block;
+}
+
+footer {
+  text-align:center; padding:20px; opacity:0.6;
+}
+</style>
+</head>
+
+<body>
+<header>
+  <strong>The Qatri Abaya</strong>
+  <nav>
+    <a onclick="show('home')">Home</a>
+    <a onclick="show('products')">Products</a>
+    <a onclick="show('checkout')">Checkout</a>
+  </nav>
+  <span class="toggle" onclick="toggleTheme()">🌓</span>
+</header>
+
+<section id="home" class="active hero">
+  <h1>Elegant Abayas</h1>
+  <p>Modesty. Grace. Comfort.</p>
+</section>
+
+<section id="products">
+  <h2>Our Collection</h2>
+  <div class="products" id="productList"></div>
+</section>
+
+<section id="checkout">
+  <h2>Checkout</h2>
+  <input id="name" placeholder="Your Name">
+  <input id="phone" placeholder="Phone Number">
+  <textarea id="address" placeholder="Delivery Address"></textarea>
+
+  <h3>UPI Payment</h3>
+  <img class="qr" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=googlepay://upi/pay?pa=YOUR_UPI_ID" />
+  <input value="YOUR_UPI_ID" readonly>
+
+  <button onclick="pay()">Pay Now</button>
+</section>
+
+<div class="cart-btn" onclick="toggleCart()">
+  🛒
+  <div class="cart-count" id="cartCount">0</div>
+</div>
+
+<div class="cart-drawer" id="cart">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <strong id="total"></strong>
+</div>
+
+<footer>© 2026 The Qatri Abaya</footer>
+
+<script>
+const products = [
+ {id:1,name:"Embroidered Black Abaya",price:1999,img:"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb"},
+ {id:2,name:"Classic Open Abaya",price:1499,img:"https://images.unsplash.com/photo-1593032465175-481ac7f401b5"},
+ {id:3,name:"Luxury Dubai Abaya",price:2999,img:"https://images.unsplash.com/photo-1618354691373-2dc9d963dc3d"},
+ {id:4,name:"Casual Daily Abaya",price:999,img:"https://images.unsplash.com/photo-1583394838336-acd977736f90"},
+ {id:5,name:"Elegant Grey Abaya",price:1799,img:"https://images.unsplash.com/photo-1600185365483-26d7a4cc7519"},
+ {id:6,name:"Floral Abaya",price:1899,img:"https://images.unsplash.com/photo-1612423284934-2850a0b6f06f"},
+ {id:7,name:"Butterfly Abaya",price:2299,img:"https://images.unsplash.com/photo-1618354691254-0b19b6c65b03"},
+ {id:8,name:"Nida Matte Abaya",price:1599,img:"https://images.unsplash.com/photo-1583391733981-24c9cda0b3e6"}
+];
+
+let cart = JSON.parse(localStorage.getItem("cart")||"[]");
+
+function show(id){
+ document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+}
+
+function renderProducts(){
+ const p=document.getElementById("productList");
+ p.innerHTML="";
+ products.forEach(pr=>{
+  p.innerHTML+=`
+  <div class="product">
+   <img src="${pr.img}">
+   <div>
+    <h4>${pr.name}</h4>
+    <p>₹${pr.price}</p>
+    <button onclick="add(${pr.id})">Add to Cart</button>
+   </div>
+  </div>`;
+ });
+}
+
+function add(id){
+ cart.push(products.find(p=>p.id===id));
+ localStorage.setItem("cart",JSON.stringify(cart));
+ updateCart();
+}
+
+function updateCart(){
+ document.getElementById("cartCount").innerText=cart.length;
+ const ci=document.getElementById("cartItems");
+ ci.innerHTML="";
+ let sum=0;
+ cart.forEach(c=>{
+  sum+=c.price;
+  ci.innerHTML+=`<div class="cart-item">${c.name} – ₹${c.price}</div>`;
+ });
+ document.getElementById("total").innerText="Total: ₹"+sum;
+}
+
+function toggleCart(){
+ document.getElementById("cart").classList.toggle("open");
+}
+
+function pay(){
+ const msg=`New order from The Qatri Abaya
+Name: ${name.value}
+Phone: ${phone.value}
+Address: ${address.value}
+Items: ${cart.map(c=>c.name).join(", ")}
+Total: ₹${cart.reduce((a,b)=>a+b.price,0)}
+Time: ${new Date().toLocaleString()}`;
+ window.open(`https://wa.me/918759134555?text=${encodeURIComponent(msg)}`);
+ alert("Payment successful! Order confirmed. Check WhatsApp for details.");
+ localStorage.clear(); cart=[]; updateCart();
+}
+
+function toggleTheme(){
+ document.body.dataset.theme=
+ document.body.dataset.theme==="dark"?"":"dark";
+}
+
+renderProducts(); updateCart();
+</script>
+</body>
+</html>

@@ -8,18 +8,15 @@
 <style>
 :root{
   --maroon:#8A1538;
-  --white:#ffffff;
   --bg:#f4f4f4;
   --text:#111;
 }
-
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
 body{background:var(--bg);color:var(--text)}
 
 header{
-  position:fixed;
-  top:0;left:0;right:0;
-  background:var(--white);
+  position:fixed;top:0;left:0;right:0;
+  background:#fff;
   border-bottom:3px solid var(--maroon);
   padding:12px 20px;
   display:flex;
@@ -27,37 +24,20 @@ header{
   justify-content:space-between;
   z-index:1000;
 }
-
 .logo img{height:42px}
 
 nav a{
   margin:0 14px;
   font-weight:600;
   cursor:pointer;
-  text-decoration:none;
-  color:var(--text);
 }
 
-.admin-btn{
-  font-size:14px;
-  color:var(--maroon);
-  cursor:pointer;
-}
+.admin-btn{color:var(--maroon);cursor:pointer}
 
-.banner{
-  margin-top:72px;
-}
-.banner img{
-  width:100%;
-  max-height:260px;
-  object-fit:cover;
-}
+.banner{margin-top:72px}
+.banner img{width:100%;max-height:260px;object-fit:cover}
 
-/* SECTIONS */
-section{
-  display:none;
-  padding:40px 20px;
-}
+section{display:none;padding:40px 20px}
 section.active{display:block}
 
 /* PRODUCTS */
@@ -66,7 +46,6 @@ section.active{display:block}
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
   gap:24px;
 }
-
 .card{
   background:#fff;
   border-radius:18px;
@@ -78,49 +57,45 @@ section.active{display:block}
   transform:rotateY(6deg) rotateX(4deg) translateY(-6px);
   box-shadow:0 30px 50px rgba(0,0,0,.25);
 }
-
-.media{
-  position:relative;
-}
 .media video{
   width:100%;
   height:260px;
   object-fit:cover;
-  display:block;
 }
+.card-content{padding:16px}
 
-.card-content{
-  padding:16px;
+/* CART */
+.cart-btn{
+  position:fixed;bottom:20px;right:20px;
+  width:55px;height:55px;
+  background:var(--maroon);
+  color:#fff;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;cursor:pointer;
 }
-.card-content h4{margin-bottom:6px}
-.card-content p{font-weight:600}
-
-/* ABOUT */
-.about{
-  max-width:900px;
-  line-height:1.8;
-  font-size:16px;
+.cart-count{
+  position:absolute;top:-5px;right:-5px;
+  width:22px;height:22px;background:red;color:#fff;
+  border-radius:50%;font-size:12px;
+  display:flex;align-items:center;justify-content:center;
 }
+.cart-drawer{
+  position:fixed;top:0;right:-100%;
+  width:320px;height:100%;
+  background:#fff;padding:20px;
+  transition:.4s;
+}
+.cart-drawer.open{right:0}
 
-/* FORM */
 input,textarea,button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
+  width:100%;padding:12px;margin-top:10px
 }
 button{
   background:var(--maroon);
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
+  color:#fff;border:none;border-radius:8px;cursor:pointer
 }
 
-footer{
-  text-align:center;
-  padding:20px;
-  opacity:.6;
-}
+footer{text-align:center;padding:20px;opacity:.6}
 </style>
 </head>
 
@@ -128,49 +103,84 @@ footer{
 
 <header>
   <div class="logo"><img src="icon-192.png"></div>
-
   <nav>
     <a onclick="show('home')">Home</a>
     <a onclick="show('products')">Products</a>
     <a onclick="show('about')">About Us</a>
     <a onclick="show('contact')">Contact Us</a>
   </nav>
-
-  <div class="admin-btn" onclick="show('admin')">Admin</div>
+  <div class="admin-btn" onclick="show('checkout')">Checkout</div>
 </header>
 
 <div class="banner">
   <img src="qatari.png">
 </div>
 
-<!-- HOME -->
 <section id="home" class="active">
   <h2>Welcome to The Qatari Abaya by Teepee's</h2>
-  <p>Elegant modest fashion inspired by Qatari heritage.</p>
 </section>
 
-<!-- PRODUCTS -->
 <section id="products">
   <h2>Our Collection</h2>
   <div class="products" id="productList"></div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
-  <h2>About The Qatari Abaya by Teepee's</h2>
+  <h2>About Us</h2>
+  <p style="max-width:900px;line-height:1.8">
+    Welcome to Teepees, Qatar's premier destination for elegant abayas that blend
+    timeless tradition with modern flair. Born from a passion for modest fashion,
+    we craft pieces that celebrate Qatari heritage while embracing contemporary designs.
+  </p>
+</section>
 
-  <div class="about">
-    <h3>The Story</h3>
-    <p>
-      Welcome to Teepees, Qatar's premier destination for elegant abayas that blend
-      timeless tradition with modern flair. Born from a passion for modest fashion,
-      we craft pieces that celebrate Qatari heritage while embracing contemporary designs.
-    </p>
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>WhatsApp: +91-87591345556</p>
+</section>
 
-    <h3>Our Craftsmanship</h3>
-    <p>
-      Every abaya at Teepees features premium fabrics like soft organza and luxurious nida,
-      ensuring comfort for daily wear or special occasions. Intricate details—textured embroidery,
-      crystal accents, and flowing silhouettes—elevate your style without compromising modesty.
-      Our designs draw from Doha’s vibrant souks, tailored for the modern woman who values quality and grace.
-    </p>
+<section id="checkout">
+  <h2>Checkout</h2>
+
+  <div id="checkoutItems"></div>
+
+  <input id="cName" placeholder="Customer Name">
+  <input id="cPhone" placeholder="Phone Number">
+  <textarea id="cAddress" placeholder="Delivery Address"></textarea>
+
+  <div style="margin-top:20px;background:#fff;padding:15px;border-radius:12px;text-align:center">
+    <h3>UPI Payment</h3>
+    <img src="UPI_QR.png" style="width:200px;margin:10px auto">
+    <p>Scan & pay, then click below</p>
+  </div>
+
+  <button onclick="confirmOrder()">I Have Paid – Place Order</button>
+</section>
+
+<div class="cart-btn" onclick="toggleCart()">🛒
+  <div class="cart-count" id="cartCount">0</div>
+</div>
+
+<div class="cart-drawer" id="cart">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+</div>
+
+<footer>© 2026 The Qatari Abaya by Teepee's</footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyAxJI4LaZu5AQyk4jJ0LTthxCGXQeJBaRQ",
+  authDomain: "qatri-abaya.firebaseapp.com",
+  projectId: "qatri-abaya"
+});
+const db = firebase.firestore();
+</script>
+
+<script src="main.js"></script>
+</body>
+</html>

@@ -89,7 +89,7 @@ ${cart.map(i=>`${i.name} (${i.size}) x${i.qty}`).join("\n")}
 
 Total: ₹${cart.reduce((s,i)=>s+i.price*i.qty,0)}
   `;
-  window.open("https://wa.me/918759134555?text="+encodeURIComponent(msg));
+  window.open("https://wa.me/917201816783?text="+encodeURIComponent(msg));
   alert("Order sent on WhatsApp");
   cart=[];saveCart();
 }

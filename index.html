@@ -9,9 +9,9 @@
 :root{
   --maroon:#8A1538;
   --maroon-dark:#6f102d;
-  --white:#ffffff;
   --bg:#f4f4f4;
   --text:#111;
+  --white:#fff;
 }
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
@@ -19,8 +19,7 @@ body{background:var(--bg);color:var(--text)}
 
 /* HEADER */
 header{
-  position:fixed;
-  top:0;left:0;right:0;
+  position:fixed;top:0;left:0;right:0;
   background:var(--white);
   border-bottom:3px solid var(--maroon);
   padding:12px 20px;
@@ -30,11 +29,7 @@ header{
   z-index:1000;
 }
 .logo img{height:42px}
-.admin-btn{
-  font-weight:600;
-  color:var(--maroon);
-  cursor:pointer;
-}
+.admin-btn{color:var(--maroon);font-weight:700;cursor:pointer}
 
 /* BANNER */
 .banner{margin-top:72px}
@@ -44,59 +39,56 @@ header{
   object-fit:cover;
 }
 
-/* GLASS MENU (DARK LUXURY) */
+/* GLASS MENU */
 .glass-menu{
   display:flex;
   justify-content:center;
   gap:18px;
   margin:24px auto;
 }
-
 .glass-menu button{
   type:button;
   padding:14px 26px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(138,21,56,0.85),
-      rgba(90,10,35,0.85)
-    );
-  backdrop-filter:blur(14px);
+  background:linear-gradient(145deg,rgba(138,21,56,.9),rgba(90,10,35,.9));
   border-radius:20px;
-  border:1px solid rgba(255,255,255,0.25);
+  border:1px solid rgba(255,255,255,.25);
   color:#fff;
   font-weight:700;
-  letter-spacing:.4px;
   cursor:pointer;
-
   box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.25),
-    inset 0 -3px 6px rgba(0,0,0,0.35),
-    0 18px 35px rgba(0,0,0,0.35);
-
-  transition:all .22s ease;
+    inset 0 2px 4px rgba(255,255,255,.25),
+    inset 0 -3px 6px rgba(0,0,0,.35),
+    0 18px 35px rgba(0,0,0,.35);
 }
-
-.glass-menu button:hover{
-  transform:translateY(-4px);
-  box-shadow:
-    inset 0 2px 6px rgba(255,255,255,0.35),
-    inset 0 -3px 6px rgba(0,0,0,0.45),
-    0 25px 45px rgba(0,0,0,0.45);
-}
-
 .glass-menu button:active{
-  transform:translateY(2px) scale(0.97);
-  box-shadow:
-    inset 0 6px 10px rgba(0,0,0,0.55);
+  transform:translateY(2px) scale(.97);
 }
 
 /* SECTIONS */
-section{
-  display:none;
-  padding:40px 20px;
-}
+section{display:none;padding:40px 20px}
 section.active{display:block}
+
+/* SLIDER */
+.slider{
+  display:flex;
+  gap:18px;
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+}
+.slide{
+  min-width:260px;
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 15px 30px rgba(0,0,0,.2);
+}
+.slide video{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+.slide div{padding:12px}
 
 /* PRODUCTS */
 .products{
@@ -104,41 +96,76 @@ section.active{display:block}
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:32px;
 }
-
 .card{
   background:#fff;
   border-radius:24px;
   overflow:hidden;
-  transition:.4s ease;
-  box-shadow:0 22px 45px rgba(0,0,0,0.2);
+  box-shadow:0 22px 45px rgba(0,0,0,.2);
+  transition:.4s;
 }
-
 .card:hover{
   transform:translateY(-12px);
-  box-shadow:0 40px 65px rgba(0,0,0,0.4);
+  box-shadow:0 40px 65px rgba(0,0,0,.4);
 }
-
 .media video{
   width:100%;
   height:300px;
   object-fit:cover;
 }
+.card-content{padding:18px}
+.card-content p{font-weight:800;color:var(--maroon)}
 
-.card-content{
-  padding:18px;
+select,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
 }
-.card-content h4{margin-bottom:6px}
-.card-content p{
-  font-weight:800;
-  color:var(--maroon);
+button{
+  background:var(--maroon);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
 }
 
-/* FOOTER */
-footer{
-  text-align:center;
+/* CART */
+.cart-btn{
+  position:fixed;
+  bottom:20px;right:20px;
+  width:58px;height:58px;
+  background:var(--maroon);
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  cursor:pointer;
+  z-index:1000;
+}
+.cart-count{
+  position:absolute;
+  top:-6px;right:-6px;
+  width:22px;height:22px;
+  background:red;color:#fff;
+  border-radius:50%;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.cart-drawer{
+  position:fixed;
+  top:0;right:-100%;
+  width:320px;height:100%;
+  background:#fff;
   padding:20px;
-  opacity:.6;
+  transition:.4s;
+  z-index:1001;
 }
+.cart-drawer.open{right:0}
+
+footer{text-align:center;padding:20px;opacity:.6}
 </style>
 </head>
 
@@ -146,23 +173,23 @@ footer{
 
 <header>
   <div class="logo"><img src="icon-192.png"></div>
-  <div class="admin-btn" onclick="navigate('checkout')">Admin</div>
+  <div class="admin-btn" onclick="navigate('checkout')">Checkout</div>
 </header>
 
 <div class="banner">
-  <img src="qatari.png" alt="Banner">
+  <img src="qatari.png">
 </div>
 
-<!-- GLASS MENU (FIXED CLICKS) -->
 <div class="glass-menu">
-  <button type="button" onclick="navigate('home')">Home</button>
-  <button type="button" onclick="navigate('products')">Products</button>
-  <button type="button" onclick="navigate('about')">About Us</button>
-  <button type="button" onclick="navigate('contact')">Contact Us</button>
+  <button onclick="navigate('home')">Home</button>
+  <button onclick="navigate('products')">Products</button>
+  <button onclick="navigate('about')">About Us</button>
+  <button onclick="navigate('contact')">Contact Us</button>
 </div>
 
 <section id="home" class="active">
-  <h2>Welcome to The Qatari Abaya by Teepee's</h2>
+  <h2>Featured Abayas</h2>
+  <div class="slider" id="homeSlider"></div>
 </section>
 
 <section id="products">
@@ -173,8 +200,7 @@ footer{
 <section id="about">
   <h2>About Us</h2>
   <p style="max-width:900px;line-height:1.8">
-    Welcome to Teepees, Qatar's premier destination for elegant abayas that blend timeless
-    tradition with modern flair.
+    Welcome to Teepees, Qatar's premier destination for elegant abayas blending tradition and modern flair.
   </p>
 </section>
 
@@ -188,19 +214,28 @@ footer{
   <img src="UPI_QR.png" style="width:220px;margin:20px auto;display:block">
 </section>
 
+<div class="cart-btn" onclick="toggleCart()">🛒
+  <div class="cart-count" id="cartCount">0</div>
+</div>
+
+<div class="cart-drawer" id="cart">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <button onclick="navigate('checkout')">Proceed to Checkout</button>
+</div>
+
 <footer>© 2026 The Qatari Abaya by Teepee's</footer>
 
-<!-- Firebase -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
 <script>
 firebase.initializeApp({
-  apiKey: "AIzaSyAxJI4LaZu5AQyk4jJ0LTthxCGXQeJBaRQ",
-  authDomain: "qatri-abaya.firebaseapp.com",
-  projectId: "qatri-abaya"
+  apiKey:"AIzaSyAxJI4LaZu5AQyk4jJ0LTthxCGXQeJBaRQ",
+  authDomain:"qatri-abaya.firebaseapp.com",
+  projectId:"qatri-abaya"
 });
-const db = firebase.firestore();
+const db=firebase.firestore();
 </script>
 
 <script src="main.js"></script>

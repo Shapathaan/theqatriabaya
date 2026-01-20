@@ -8,15 +8,18 @@
 <style>
 :root{
   --maroon:#8A1538;
+  --white:#ffffff;
   --bg:#f4f4f4;
   --text:#111;
 }
+
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
 body{background:var(--bg);color:var(--text)}
 
 header{
-  position:fixed;top:0;left:0;right:0;
-  background:#fff;
+  position:fixed;
+  top:0;left:0;right:0;
+  background:var(--white);
   border-bottom:3px solid var(--maroon);
   padding:12px 20px;
   display:flex;
@@ -26,18 +29,64 @@ header{
 }
 .logo img{height:42px}
 
-nav a{
-  margin:0 14px;
+.top-nav a{
+  margin:0 12px;
   font-weight:600;
   cursor:pointer;
+  text-decoration:none;
+  color:var(--text);
 }
 
-.admin-btn{color:var(--maroon);cursor:pointer}
+.admin-btn{
+  color:var(--maroon);
+  cursor:pointer;
+  font-weight:600;
+}
 
-.banner{margin-top:72px}
-.banner img{width:100%;max-height:260px;object-fit:cover}
+/* BANNER */
+.banner{
+  margin-top:72px;
+}
+.banner img{
+  width:100%;
+  max-height:260px;
+  object-fit:cover;
+}
 
-section{display:none;padding:40px 20px}
+/* GLASS MENU */
+.glass-menu{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  margin:20px auto;
+}
+.glass-menu button{
+  padding:12px 20px;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(14px);
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,0.4);
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.7),
+    0 10px 25px rgba(0,0,0,0.18);
+  font-weight:600;
+  cursor:pointer;
+  transition:0.25s;
+}
+.glass-menu button:hover{
+  transform:translateY(-3px);
+}
+.glass-menu button:active{
+  transform:translateY(1px) scale(0.97);
+  box-shadow:
+    inset 0 4px 6px rgba(0,0,0,0.25);
+}
+
+/* SECTIONS */
+section{
+  display:none;
+  padding:40px 20px;
+}
 section.active{display:block}
 
 /* PRODUCTS */
@@ -51,7 +100,7 @@ section.active{display:block}
   border-radius:18px;
   overflow:hidden;
   perspective:1000px;
-  transition:.4s;
+  transition:.35s;
 }
 .card:hover{
   transform:rotateY(6deg) rotateX(4deg) translateY(-6px);
@@ -64,35 +113,18 @@ section.active{display:block}
 }
 .card-content{padding:16px}
 
-/* CART */
-.cart-btn{
-  position:fixed;bottom:20px;right:20px;
-  width:55px;height:55px;
-  background:var(--maroon);
-  color:#fff;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;cursor:pointer;
-}
-.cart-count{
-  position:absolute;top:-5px;right:-5px;
-  width:22px;height:22px;background:red;color:#fff;
-  border-radius:50%;font-size:12px;
-  display:flex;align-items:center;justify-content:center;
-}
-.cart-drawer{
-  position:fixed;top:0;right:-100%;
-  width:320px;height:100%;
-  background:#fff;padding:20px;
-  transition:.4s;
-}
-.cart-drawer.open{right:0}
-
+/* CHECKOUT */
 input,textarea,button{
-  width:100%;padding:12px;margin-top:10px
+  width:100%;
+  padding:12px;
+  margin-top:10px;
 }
 button{
   background:var(--maroon);
-  color:#fff;border:none;border-radius:8px;cursor:pointer
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
 
 footer{text-align:center;padding:20px;opacity:.6}
@@ -103,17 +135,26 @@ footer{text-align:center;padding:20px;opacity:.6}
 
 <header>
   <div class="logo"><img src="icon-192.png"></div>
-  <nav>
-    <a onclick="show('home')">Home</a>
-    <a onclick="show('products')">Products</a>
-    <a onclick="show('about')">About Us</a>
-    <a onclick="show('contact')">Contact Us</a>
+
+  <nav class="top-nav">
+    <a onclick="navigate('home')">Home</a>
+    <a onclick="navigate('products')">Products</a>
+    <a onclick="navigate('about')">About Us</a>
+    <a onclick="navigate('contact')">Contact Us</a>
   </nav>
-  <div class="admin-btn" onclick="show('checkout')">Checkout</div>
+
+  <div class="admin-btn" onclick="navigate('checkout')">Checkout</div>
 </header>
 
 <div class="banner">
-  <img src="qatari.png">
+  <img src="qatari.png" alt="Banner">
+</div>
+
+<div class="glass-menu">
+  <button onclick="navigate('home')">Home</button>
+  <button onclick="navigate('products')">Products</button>
+  <button onclick="navigate('about')">About Us</button>
+  <button onclick="navigate('contact')">Contact Us</button>
 </div>
 
 <section id="home" class="active">
@@ -136,35 +177,13 @@ footer{text-align:center;padding:20px;opacity:.6}
 
 <section id="contact">
   <h2>Contact Us</h2>
-  <p>WhatsApp: +91-87591345556</p>
+  <p>WhatsApp: +91-7201816783</p>
 </section>
 
 <section id="checkout">
   <h2>Checkout</h2>
-
-  <div id="checkoutItems"></div>
-
-  <input id="cName" placeholder="Customer Name">
-  <input id="cPhone" placeholder="Phone Number">
-  <textarea id="cAddress" placeholder="Delivery Address"></textarea>
-
-  <div style="margin-top:20px;background:#fff;padding:15px;border-radius:12px;text-align:center">
-    <h3>UPI Payment</h3>
-    <img src="UPI_QR.png" style="width:200px;margin:10px auto">
-    <p>Scan & pay, then click below</p>
-  </div>
-
-  <button onclick="confirmOrder()">I Have Paid – Place Order</button>
+  <img src="UPI_QR.png" style="width:220px;margin:20px auto;display:block">
 </section>
-
-<div class="cart-btn" onclick="toggleCart()">🛒
-  <div class="cart-count" id="cartCount">0</div>
-</div>
-
-<div class="cart-drawer" id="cart">
-  <h3>Your Cart</h3>
-  <div id="cartItems"></div>
-</div>
 
 <footer>© 2026 The Qatari Abaya by Teepee's</footer>
 

@@ -249,10 +249,16 @@ footer{text-align:center;padding:20px;opacity:.6}
 </div>
 
 <div class="cart-drawer" id="cart">
-  <h3>Your Cart</h3>
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h3>Your Cart</h3>
+    <span style="cursor:pointer;font-size:22px" onclick="toggleCart()">✕</span>
+  </div>
+
   <div id="cartItems"></div>
+
   <button onclick="navigate('checkout')">Proceed to Checkout</button>
 </div>
+
 
 <footer>© 2026 The Qatari Abaya by Teepee's</footer>
 

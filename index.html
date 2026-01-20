@@ -1,277 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Qatari Abaya</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 :root{
   --qatar-maroon:#8A1538;
-  --qatar-white:#ffffff;
-  --qatar-bg:#f4f4f4;
-  --qatar-text:#111;
+  --bg:#f4f4f4;
 }
-
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
-body{background:var(--qatar-bg);color:var(--qatar-text)}
-
+body{margin:0;font-family:Arial;background:var(--bg)}
 header{
-  position:fixed;
-  top:0;left:0;right:0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:12px 20px;
-  background:var(--qatar-white);
-  border-bottom:3px solid var(--qatar-maroon);
-  z-index:1000;
+  position:fixed;top:0;left:0;right:0;
+  background:#fff;border-bottom:3px solid var(--qatar-maroon);
+  padding:12px 20px;z-index:10;
+  display:flex;justify-content:space-between
 }
-.logo img{width:42px}
+header img{height:40px}
+nav a{margin:0 10px;cursor:pointer;font-weight:bold}
 
-nav a{
-  margin:0 10px;
-  font-weight:600;
-  cursor:pointer;
-  text-decoration:none;
-  color:var(--qatar-text);
-}
-nav a:hover{color:var(--qatar-maroon)}
-
-.page-banner{
-  margin-top:70px;
-}
-.page-banner img{
-  width:100%;
-  max-height:260px;
-  object-fit:cover;
-}
-
-/* SECTIONS */
-section{
-  padding:40px 20px;
-  display:none;
-}
+section{display:none;padding:90px 20px}
 section.active{display:block}
 
-/* GLASS MENU */
-.glass-menu{
-  margin:25px auto;
-  display:flex;
-  justify-content:center;
-  gap:15px;
-}
-.glass-menu div{
-  padding:12px 18px;
-  background:rgba(255,255,255,.25);
-  backdrop-filter:blur(12px);
-  border-radius:14px;
-  cursor:pointer;
-  box-shadow:0 8px 20px rgba(0,0,0,.15);
-}
-
-/* SLIDER */
-.slider{
-  display:flex;
-  gap:15px;
-  overflow-x:auto;
-}
-.slide{
-  min-width:220px;
-  background:#fff;
-  border-radius:14px;
-  overflow:hidden;
-}
-.slide img{
-  width:100%;
-  height:260px;
-  object-fit:cover;
-}
-
-/* PRODUCTS */
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
-.product-card{
-  background:#fff;
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid #ddd;
-  transition:.3s;
-}
-.product-card:hover{
-  transform:translateY(-4px);
-  box-shadow:0 12px 30px rgba(0,0,0,.15);
-}
-
-.media img{
-  width:100%;
-  height:240px;
-  object-fit:cover;
-}
-.media video{
-  width:100%;
-  height:140px;
-  object-fit:cover;
-  margin-top:6px;
-  border-radius:10px;
-}
-
-.badge{
-  position:absolute;
-  top:10px;left:10px;
-  background:var(--qatar-maroon);
-  color:#fff;
-  padding:4px 10px;
-  border-radius:20px;
-  font-size:12px;
-}
-
-select,button,input,textarea{
-  width:100%;
-  padding:10px;
-  margin-top:8px;
-}
-button{
-  background:var(--qatar-maroon);
-  color:#fff;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-}
-
-/* CART */
-.cart-btn{
-  position:fixed;
-  bottom:20px;right:20px;
-  width:55px;height:55px;
-  background:var(--qatar-maroon);
-  color:#fff;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-}
-.cart-count{
-  position:absolute;
-  top:-5px;right:-5px;
-  width:22px;height:22px;
-  background:red;color:#fff;
-  border-radius:50%;
-  font-size:12px;
-  display:flex;align-items:center;justify-content:center;
-}
-.cart-drawer{
-  position:fixed;
-  top:0;right:-100%;
-  width:320px;height:100%;
-  background:#fff;
-  padding:20px;
-  transition:.4s;
-}
-.cart-drawer.open{right:0}
-
-footer{text-align:center;padding:20px;opacity:.6}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:#fff;border-radius:12px;overflow:hidden}
+.card img,.card video{width:100%;height:220px;object-fit:cover}
+.card div{padding:10px}
+button{background:var(--qatar-maroon);color:#fff;border:none;padding:10px;width:100%}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo"><img src="icon-192.png"></div>
+  <img src="icon-192.png">
   <nav>
-    <a onclick="show('home')">Home</a>
     <a onclick="show('products')">Products</a>
-    <a onclick="show('offers')">Offers</a>
-    <a onclick="show('about')">About Us</a>
-    <a onclick="show('checkout')">Checkout</a>
+    <a onclick="show('admin')">Admin</a>
   </nav>
 </header>
 
-<!-- GLOBAL BANNER -->
-<div class="page-banner">
-  <img src="qatari.png" alt="The Qatari Abaya">
-</div>
-
-<!-- HOME -->
-<section id="home" class="active">
-  <div class="glass-menu">
-    <div onclick="show('products')">Products</div>
-    <div onclick="show('offers')">Offers</div>
-    <div onclick="show('checkout')">Checkout</div>
-  </div>
-
-  <h3>Featured Abayas</h3>
-  <div class="slider" id="homeSlider"></div>
-</section>
-
-<!-- PRODUCTS -->
-<section id="products">
-  <h2>Our Collection</h2>
+<section id="products" class="active">
+  <h2>Products</h2>
   <div class="products" id="productList"></div>
 </section>
 
-<!-- OFFERS -->
-<section id="offers">
-  <h2>Special Offers</h2>
-  <div id="offerList"></div>
+<section id="admin">
+  <h2>Admin Upload</h2>
+
+  <input id="pName" placeholder="Product name"><br><br>
+  <input id="pPrice" type="number" placeholder="Price"><br><br>
+  <input type="file" id="pImage"><br><br>
+  <input type="file" id="pVideo"><br><br>
+
+  <button onclick="uploadProduct()">Upload Product</button>
 </section>
 
-<!-- ABOUT US -->
-<section id="about">
-  <h2>About The Qatari Abaya</h2>
-  <p style="max-width:800px;line-height:1.7;margin-top:10px">
-    The Qatari Abaya is a modest fashion brand inspired by elegance,
-    tradition, and modern craftsmanship.
-    <br><br>
-    We focus on premium-quality abayas that combine comfort with
-    timeless design, suitable for everyday wear and special occasions.
-    <br><br>
-    Every piece is carefully curated to reflect simplicity, grace,
-    and cultural authenticity.
-  </p>
-</section>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-<!-- CHECKOUT -->
-<section id="checkout">
-  <h2>Checkout</h2>
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyAxJI4LaZu5AQyk4jJ0LTthxCGXQeJBaRQ",
+  authDomain: "qatri-abaya.firebaseapp.com",
+  projectId: "qatri-abaya"
+});
+const db = firebase.firestore();
+</script>
 
-  <div id="checkoutItems"></div>
-
-  <input id="cName" placeholder="Customer Name">
-  <input id="cPhone" placeholder="Phone Number">
-  <textarea id="cAddress" placeholder="Delivery Address"></textarea>
-
-  <div style="margin-top:15px;background:#fff;padding:15px;border-radius:12px">
-    <h3>UPI Payment</h3>
-    <div style="width:200px;height:200px;background:#eee;margin:10px auto;
-    display:flex;align-items:center;justify-content:center">
-      QR WILL BE HERE
-    </div>
-    <p>UPI ID: <strong>WILL_ADD_LATER</strong></p>
-  </div>
-
-  <button onclick="confirmOrder()">I Have Paid – Place Order</button>
-</section>
-
-<!-- CART -->
-<div class="cart-btn" onclick="toggleCart()">🛒
-  <div class="cart-count" id="cartCount">0</div>
-</div>
-
-<div class="cart-drawer" id="cart">
-  <h3>Your Cart</h3>
-  <div id="cartItems"></div>
-</div>
-
-<footer>© 2026 The Qatari Abaya</footer>
-
-<script src="products.js"></script>
-<script src="offers.js"></script>
 <script src="main.js"></script>
-
 </body>
 </html>

@@ -18,4 +18,3 @@ const PRODUCTS = [
     sizes: ["M","L","XL"]
   }
 ];
-

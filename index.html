@@ -331,8 +331,9 @@ function renderProducts(){
           <h4>${p.name}</h4>
           <p>₹${p.price}</p>
           <select id="size-${p.id}">
-            <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
-          </select>
+  ${p.sizes.map(s => `<option>${s}</option>`).join("")}
+</select>
+
           <button onclick="addToCart(${p.id})">Add to Cart</button>
         </div>
       </div>`;

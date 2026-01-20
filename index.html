@@ -183,9 +183,26 @@ Join the Teepees family and redefine modest luxury—one abaya at a time.
 </section>
 
 <section id="admin">
-  <h2>Admin Panel</h2>
-  <p>Admin login & product upload will be added next.</p>
+  <h2>Admin Login</h2>
+
+  <input id="adminEmail" placeholder="Admin Email">
+  <input id="adminPassword" type="password" placeholder="Password">
+  <button onclick="loginAdmin()">Login</button>
+
+  <div id="adminPanel" style="display:none;margin-top:20px">
+    <h3>Add Product</h3>
+
+    <input id="pName" placeholder="Product Name">
+    <input id="pPrice" type="number" placeholder="Price (₹)">
+    <input id="pSizes" placeholder="Sizes (S,M,L,XL)">
+    <input type="file" id="pVideo" accept="video/*">
+    <input type="file" id="pImage" accept="image/*">
+
+    <button onclick="addProduct()">Upload Product</button>
+    <p id="status"></p>
+  </div>
 </section>
+
 
 <footer>© 2026 The Qatari Abaya by Teepee's</footer>
 

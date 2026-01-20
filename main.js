@@ -1,29 +1,43 @@
-const CLOUD_NAME = "PASTE_YOUR_CLOUD_NAME";
-const UPLOAD_PRESET = "PASTE_UPLOAD_PRESET";
+/* ===============================
+   CLOUDINARY CONFIG (FINAL)
+=============================== */
+const CLOUD_NAME = "dsdvlwxa4";
+const UPLOAD_PRESET = "qatari-abaya";
 
+/* ===============================
+   NAVIGATION
+=============================== */
 function show(id){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
+/* ===============================
+   LOAD PRODUCTS
+=============================== */
 function loadProducts(){
-  db.collection("products").onSnapshot(snap=>{
+  db.collection("products").onSnapshot(snapshot=>{
     productList.innerHTML="";
-    snap.forEach(doc=>{
+    snapshot.forEach(doc=>{
       const p = doc.data();
       productList.innerHTML += `
         <div class="card">
           <img src="${p.image}">
           ${p.video ? `<video src="${p.video}" controls></video>` : ""}
           <div>
-            <b>${p.name}</b><br>
-            ₹${p.price}
+            <strong>${p.name}</strong><br>
+            ₹${p.price}<br>
+            <small>${p.badge || ""}</small>
           </div>
-        </div>`;
+        </div>
+      `;
     });
   });
 }
 
+/* ===============================
+   CLOUDINARY UPLOAD
+=============================== */
 async function uploadToCloudinary(file){
   const form = new FormData();
   form.append("file", file);
@@ -33,15 +47,25 @@ async function uploadToCloudinary(file){
     `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`,
     { method:"POST", body:form }
   );
+
   const data = await res.json();
   return data.secure_url;
 }
 
+/* ===============================
+   ADMIN UPLOAD PRODUCT
+=============================== */
 async function uploadProduct(){
+  status.innerText = "Uploading...";
+
   const imgFile = pImage.files[0];
   const vidFile = pVideo.files[0];
 
-  if(!imgFile){alert("Image required");return;}
+  if(!imgFile){
+    alert("Image required");
+    status.innerText = "";
+    return;
+  }
 
   const imgURL = await uploadToCloudinary(imgFile);
   const vidURL = vidFile ? await uploadToCloudinary(vidFile) : "";
@@ -49,11 +73,24 @@ async function uploadProduct(){
   await db.collection("products").add({
     name: pName.value,
     price: Number(pPrice.value),
+    badge: pBadge.value,
+    sizes: pSizes.value.split(","),
     image: imgURL,
-    video: vidURL
+    video: vidURL,
+    createdAt: new Date()
   });
 
-  alert("Product uploaded");
+  status.innerText = "Product uploaded successfully";
+
+  pName.value="";
+  pPrice.value="";
+  pBadge.value="";
+  pSizes.value="";
+  pImage.value="";
+  pVideo.value="";
 }
 
+/* ===============================
+   INIT
+=============================== */
 loadProducts();

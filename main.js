@@ -1,20 +1,10 @@
-/***********************
- CONFIG
-************************/
-const CLOUD_NAME = "dsdvlwxa4";
-const UPLOAD_PRESET = "qatari-abaya";
-
-/***********************
- NAVIGATION (already used)
-************************/
+/* NAVIGATION */
 function navigate(id){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
 
-/***********************
- ADMIN LOGIN
-************************/
+/* ADMIN LOGIN */
 function loginAdmin(){
   const email = adminEmail.value;
   const pass  = adminPassword.value;
@@ -30,9 +20,11 @@ function loginAdmin(){
     });
 }
 
-/***********************
- CLOUDINARY UPLOAD
-************************/
+/* CLOUDINARY CONFIG */
+const CLOUD_NAME = "dsdvlwxa4";
+const UPLOAD_PRESET = "qatari-abaya";
+
+/* CLOUDINARY UPLOAD */
 async function uploadToCloudinary(file){
   const fd = new FormData();
   fd.append("file", file);
@@ -42,14 +34,11 @@ async function uploadToCloudinary(file){
     `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`,
     { method:"POST", body:fd }
   );
-
   const data = await res.json();
   return data.secure_url;
 }
 
-/***********************
- ADD PRODUCT
-************************/
+/* ADD PRODUCT */
 async function addProduct(){
   status.innerText = "Uploading...";
 
@@ -75,108 +64,6 @@ async function addProduct(){
     pVideo.value = pImage.value = "";
 
   }catch(e){
-    status.innerText = "❌ Error: " + e.message;
+    status.innerText = "❌ " + e.message;
   }
 }
-
-/***********************
- LOAD PRODUCTS (UI SAFE)
-************************/
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let slideIndex = 0;
-
-function loadProducts(){
-  firebase.firestore().collection("products")
-  .orderBy("createdAt","desc")
-  .onSnapshot(snapshot=>{
-    productList.innerHTML = "";
-    carouselTrack.innerHTML = "";
-
-    snapshot.forEach(doc=>{
-      const p = doc.data();
-      const id = doc.id;
-
-      /* HOME CAROUSEL */
-      carouselTrack.innerHTML += `
-        <div class="carousel-card" onclick="navigate('products')">
-          <video src="${p.video}" muted autoplay loop></video>
-          <div>${p.name}</div>
-        </div>
-      `;
-
-      /* PRODUCTS PAGE */
-      productList.innerHTML += `
-        <div class="card">
-          <div class="media">
-            <video src="${p.video}" muted loop></video>
-          </div>
-          <div class="card-content">
-            <h4>${p.name}</h4>
-            <p>₹${p.price}</p>
-
-            <select id="size-${id}">
-              ${p.sizes.map(s=>`<option>${s}</option>`).join("")}
-            </select>
-
-            <button onclick="addToCart('${id}','${p.name}',${p.price})">
-              Add to Cart
-            </button>
-          </div>
-        </div>
-      `;
-    });
-
-    startCarousel();
-  });
-}
-
-/***********************
- CAROUSEL AUTO
-************************/
-function startCarousel(){
-  if(carouselTrack.children.length === 0) return;
-
-  setInterval(()=>{
-    slideIndex = (slideIndex + 1) % carouselTrack.children.length;
-    carouselTrack.style.transform =
-      `translateX(-${slideIndex * 280}px)`;
-  }, 3000);
-}
-
-/***********************
- CART LOGIC
-************************/
-function addToCart(id,name,price){
-  const size = document.getElementById(`size-${id}`).value;
-  cart.push({name,price,size});
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
-}
-
-function renderCart(){
-  cartItems.innerHTML = "";
-  cartCount.innerText = cart.length;
-
-  cart.forEach((i,idx)=>{
-    cartItems.innerHTML += `
-      ${i.name} (${i.size}) ₹${i.price}
-      <button onclick="removeItem(${idx})">❌</button><br>
-    `;
-  });
-}
-
-function removeItem(i){
-  cart.splice(i,1);
-  localStorage.setItem("cart", JSON.stringify(cart));
-  renderCart();
-}
-
-function toggleCart(){
-  document.getElementById("cart").classList.toggle("open");
-}
-
-/***********************
- INIT
-************************/
-loadProducts();
-renderCart();

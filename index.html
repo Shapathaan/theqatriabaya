@@ -8,16 +8,16 @@
 <style>
 :root{
   --maroon:#8A1538;
+  --maroon-dark:#6f102d;
   --white:#ffffff;
   --bg:#f4f4f4;
   --text:#111;
 }
 
-/* RESET */
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
 body{background:var(--bg);color:var(--text)}
 
-/* HEADER (LOGO + ADMIN ONLY) */
+/* HEADER */
 header{
   position:fixed;
   top:0;left:0;right:0;
@@ -37,43 +37,58 @@ header{
 }
 
 /* BANNER */
-.banner{
-  margin-top:72px;
-}
+.banner{margin-top:72px}
 .banner img{
   width:100%;
   max-height:260px;
   object-fit:cover;
 }
 
-/* GLASS MENU (BELOW BANNER) */
+/* GLASS MENU (DARK LUXURY) */
 .glass-menu{
   display:flex;
   justify-content:center;
   gap:18px;
-  margin:22px auto;
+  margin:24px auto;
 }
+
 .glass-menu button{
-  padding:12px 22px;
-  background:rgba(138,21,56,0.18); /* maroon glass */
+  type:button;
+  padding:14px 26px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(138,21,56,0.85),
+      rgba(90,10,35,0.85)
+    );
   backdrop-filter:blur(14px);
-  border-radius:18px;
-  border:1px solid rgba(138,21,56,0.35);
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.25);
   color:#fff;
-  font-weight:600;
+  font-weight:700;
+  letter-spacing:.4px;
   cursor:pointer;
+
   box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.35),
-    0 12px 28px rgba(0,0,0,0.25);
-  transition:.25s;
+    inset 0 2px 4px rgba(255,255,255,0.25),
+    inset 0 -3px 6px rgba(0,0,0,0.35),
+    0 18px 35px rgba(0,0,0,0.35);
+
+  transition:all .22s ease;
 }
+
 .glass-menu button:hover{
-  transform:translateY(-3px);
-}
-.glass-menu button:active{
-  transform:translateY(1px) scale(0.96);
+  transform:translateY(-4px);
   box-shadow:
-    inset 0 4px 8px rgba(0,0,0,0.35);
+    inset 0 2px 6px rgba(255,255,255,0.35),
+    inset 0 -3px 6px rgba(0,0,0,0.45),
+    0 25px 45px rgba(0,0,0,0.45);
+}
+
+.glass-menu button:active{
+  transform:translateY(2px) scale(0.97);
+  box-shadow:
+    inset 0 6px 10px rgba(0,0,0,0.55);
 }
 
 /* SECTIONS */
@@ -83,59 +98,42 @@ section{
 }
 section.active{display:block}
 
-/* PRODUCTS GRID */
+/* PRODUCTS */
 .products{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:32px;
 }
 
-/* PRODUCT CARD (PRO LEVEL) */
 .card{
   background:#fff;
-  border-radius:22px;
+  border-radius:24px;
   overflow:hidden;
-  transform-style:preserve-3d;
   transition:.4s ease;
-  box-shadow:0 18px 35px rgba(0,0,0,0.18);
-}
-.card:hover{
-  transform:translateY(-10px) scale(1.03);
-  box-shadow:0 35px 60px rgba(0,0,0,0.35);
+  box-shadow:0 22px 45px rgba(0,0,0,0.2);
 }
 
-/* VIDEO */
+.card:hover{
+  transform:translateY(-12px);
+  box-shadow:0 40px 65px rgba(0,0,0,0.4);
+}
+
 .media video{
   width:100%;
-  height:280px;
+  height:300px;
   object-fit:cover;
-  display:block;
 }
 
-/* CARD CONTENT */
 .card-content{
   padding:18px;
 }
 .card-content h4{margin-bottom:6px}
 .card-content p{
-  font-weight:700;
+  font-weight:800;
   color:var(--maroon);
 }
 
-/* CHECKOUT */
-input,textarea,button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-}
-button{
-  background:var(--maroon);
-  color:#fff;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-}
-
+/* FOOTER */
 footer{
   text-align:center;
   padding:20px;
@@ -146,54 +144,45 @@ footer{
 
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="logo"><img src="icon-192.png"></div>
   <div class="admin-btn" onclick="navigate('checkout')">Admin</div>
 </header>
 
-<!-- BANNER -->
 <div class="banner">
   <img src="qatari.png" alt="Banner">
 </div>
 
-<!-- GLASS MENU -->
+<!-- GLASS MENU (FIXED CLICKS) -->
 <div class="glass-menu">
-  <button onclick="navigate('home')">Home</button>
-  <button onclick="navigate('products')">Products</button>
-  <button onclick="navigate('about')">About Us</button>
-  <button onclick="navigate('contact')">Contact Us</button>
+  <button type="button" onclick="navigate('home')">Home</button>
+  <button type="button" onclick="navigate('products')">Products</button>
+  <button type="button" onclick="navigate('about')">About Us</button>
+  <button type="button" onclick="navigate('contact')">Contact Us</button>
 </div>
 
-<!-- HOME -->
 <section id="home" class="active">
   <h2>Welcome to The Qatari Abaya by Teepee's</h2>
-  <p>Elegant modest fashion inspired by Qatari heritage.</p>
 </section>
 
-<!-- PRODUCTS -->
 <section id="products">
   <h2>Our Collection</h2>
   <div class="products" id="productList"></div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
-  <h2>About The Qatari Abaya by Teepee's</h2>
+  <h2>About Us</h2>
   <p style="max-width:900px;line-height:1.8">
     Welcome to Teepees, Qatar's premier destination for elegant abayas that blend timeless
-    tradition with modern flair. Born from a passion for modest fashion, we craft pieces
-    that celebrate Qatari heritage while embracing contemporary designs.
+    tradition with modern flair.
   </p>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <h2>Contact Us</h2>
   <p>WhatsApp: +91-7201816783</p>
 </section>
 
-<!-- CHECKOUT / ADMIN -->
 <section id="checkout">
   <h2>Checkout</h2>
   <img src="UPI_QR.png" style="width:220px;margin:20px auto;display:block">
@@ -201,7 +190,7 @@ footer{
 
 <footer>© 2026 The Qatari Abaya by Teepee's</footer>
 
-<!-- FIREBASE -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 

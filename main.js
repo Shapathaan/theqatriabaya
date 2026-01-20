@@ -1,4 +1,5 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+let slideIndex = 0;
 
 function navigate(id){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
@@ -9,17 +10,17 @@ function navigate(id){
 function loadProducts(){
   db.collection("products").onSnapshot(snapshot=>{
     productList.innerHTML="";
-    homeSlider.innerHTML="";
+    carouselTrack.innerHTML="";
 
     snapshot.forEach(doc=>{
       const p = doc.data();
       const pid = doc.id;
 
-      /* HOME SLIDER */
-      homeSlider.innerHTML += `
-        <div class="slide" onclick="navigate('products')">
+      /* HOME CAROUSEL */
+      carouselTrack.innerHTML += `
+        <div class="carousel-card" onclick="navigate('products')">
           <video src="${p.video}" muted autoplay loop></video>
-          <div><b>${p.name}</b></div>
+          <div>${p.name}</div>
         </div>`;
 
       /* PRODUCTS PAGE */
@@ -45,21 +46,21 @@ function loadProducts(){
         </div>`;
     });
 
-    autoScrollSlider();
+    startCarousel();
   });
 }
 
-/* SLIDER AUTO MOVE */
-function autoScrollSlider(){
-  let x = 0;
+/* AUTO CAROUSEL */
+function startCarousel(){
+  const track = document.getElementById("carouselTrack");
+  const cards = track.children.length;
   setInterval(()=>{
-    homeSlider.scrollTo({left:x,behavior:"smooth"});
-    x += 280;
-    if(x > homeSlider.scrollWidth) x = 0;
-  },3000);
+    slideIndex = (slideIndex + 1) % cards;
+    track.style.transform = `translateX(-${slideIndex * 302}px)`;
+  }, 3000);
 }
 
-/* CART LOGIC */
+/* CART */
 function addToCart(id,name,price){
   const size = document.getElementById(`size-${id}`).value;
   cart.push({id,name,price,size});

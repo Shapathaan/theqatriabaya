@@ -14,6 +14,7 @@
   --text:#111;
 }
 
+/* RESET */
 *{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
 body{background:var(--bg);color:var(--text)}
 
@@ -29,12 +30,30 @@ header{
   align-items:center;
   z-index:1000;
 }
-.logo img{height:48px}
-@media(max-width:600px){.logo img{height:56px}}
+
+.logo img{
+  height:50px;
+}
+@media(max-width:600px){
+  .logo img{height:56px}
+}
+
+.admin-btn{
+  color:var(--maroon);
+  font-weight:700;
+  cursor:pointer;
+  font-size:15px;
+}
 
 /* BANNER */
-.banner{margin-top:70px}
-.banner img{width:100%;max-height:260px;object-fit:cover}
+.banner{
+  margin-top:72px;
+}
+.banner img{
+  width:100%;
+  max-height:260px;
+  object-fit:cover;
+}
 
 /* GLASS MENU */
 .glass-menu{
@@ -44,6 +63,7 @@ header{
   margin:18px auto;
   flex-wrap:wrap;
 }
+
 .glass-menu button{
   padding:10px 18px;
   background:linear-gradient(
@@ -62,176 +82,112 @@ header{
     0 12px 26px rgba(0,0,0,.28);
   transition:.2s;
 }
+
 .glass-menu button:active{
   transform:translateY(2px) scale(.97);
 }
 
 /* SECTIONS */
-section{display:none;padding:32px 16px}
+section{
+  display:none;
+  padding:32px 16px;
+}
 section.active{display:block}
 
-/* HOME CAROUSEL */
-.carousel{overflow:hidden}
-.carousel-track{
-  display:flex;
-  gap:18px;
-  transition:transform .6s ease;
-}
-.carousel-card{
-  min-width:260px;
-  background:#fff;
-  border-radius:20px;
-  overflow:hidden;
-  box-shadow:0 16px 30px rgba(0,0,0,.22);
-  cursor:pointer;
-}
-.carousel-card video{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-}
-.carousel-card div{
-  padding:12px;
-  font-weight:700;
-}
+/* HOME */
+h2{margin-bottom:12px}
 
-/* PRODUCTS */
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:24px;
-}
-.card{
-  background:#fff;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:0 18px 35px rgba(0,0,0,.22);
-  transition:.35s;
-}
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 30px 50px rgba(0,0,0,.38);
-}
-.media video{width:100%;height:280px;object-fit:cover}
-.card-content{padding:16px}
-.card-content p{font-weight:800;color:var(--maroon)}
-
-select,button{
-  width:100%;
-  padding:10px;
-  margin-top:8px;
-}
-button{
-  background:var(--maroon);
-  color:#fff;
-  border:none;
-  border-radius:10px;
-}
-
-/* CART */
-.cart-btn{
-  position:fixed;
-  bottom:20px;right:20px;
-  width:54px;height:54px;
-  background:var(--maroon);
-  color:#fff;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-  cursor:pointer;
-  z-index:1000;
-}
-.cart-count{
-  position:absolute;
-  top:-5px;right:-5px;
-  width:20px;height:20px;
-  background:red;color:#fff;
-  border-radius:50%;
-  font-size:11px;
-  display:flex;align-items:center;justify-content:center;
-}
-.cart-drawer{
-  position:fixed;
-  top:0;right:-100%;
-  width:300px;height:100%;
-  background:#fff;
+/* FOOTER */
+footer{
+  text-align:center;
   padding:16px;
-  transition:.3s;
-  z-index:1001;
+  opacity:.6;
 }
-.cart-drawer.open{right:0}
-
-footer{text-align:center;padding:16px;opacity:.6}
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <header>
-  <div class="logo"><img src="icon-192.png"></div>
+  <div class="logo">
+    <img src="icon-192.png" alt="The Qatari Abaya">
+  </div>
+
+  <!-- ADMIN BUTTON (VISIBLE & FIXED) -->
+  <div class="admin-btn" onclick="navigate('admin')">
+    Admin
+  </div>
 </header>
 
-<div class="banner"><img src="qatari.png"></div>
+<!-- BANNER -->
+<div class="banner">
+  <img src="qatari.png" alt="Banner">
+</div>
 
+<!-- MAIN MENU -->
 <div class="glass-menu">
   <button onclick="navigate('home')">Home</button>
   <button onclick="navigate('products')">Products</button>
   <button onclick="navigate('about')">About Us</button>
   <button onclick="navigate('contact')">Contact Us</button>
+  <button onclick="navigate('checkout')">Checkout</button>
 </div>
 
+<!-- SECTIONS -->
 <section id="home" class="active">
-  <h2>Featured Abayas</h2>
-  <div class="carousel">
-    <div class="carousel-track" id="carouselTrack"></div>
-  </div>
+  <h2>Welcome to The Qatari Abaya by Teepee's</h2>
+  <p>Elegant modest fashion inspired by Qatari heritage.</p>
 </section>
 
 <section id="products">
   <h2>Our Collection</h2>
-  <div class="products" id="productList"></div>
+  <p>Products will appear here.</p>
 </section>
 
 <section id="about">
   <h2>About Us</h2>
   <p style="max-width:900px;line-height:1.8">
-    Welcome to Teepees, Qatar's premier destination for elegant abayas that blend timeless
-    tradition with modern flair. Born from a passion for modest fashion, we craft pieces
-    that celebrate Qatari heritage while embracing contemporary designs.
+   About The Qatari Abaya By Teepee's: The Qatari Abaya Story
+Welcome to Teepees, Qatar's premier destination for elegant abayas that blend timeless tradition with modern flair. Born from a passion for modest fashion, we craft pieces that celebrate Qatari heritage while embracing contemporary designs.
+
+Our Craftsmanship
+Every abaya at Teepees features premium fabrics like soft organza and luxurious nida, ensuring comfort for daily wear or special occasions. Intricate details—think textured embroidery, crystal accents, and flowing silhouettes—elevate your style without compromising modesty. Our designs draw from Doha’s vibrant souks, tailored for the modern woman who values quality and grace.
+​
+
+Qatari Roots, Global Appeal
+Inspired by Qatar's rich cultural tapestry, Teepees brings authentic Arabian elegance to women worldwide. From classic black abayas to bold prints, our collection suits offices, evenings out, or festive gatherings. We prioritize ethical production in Dubai workshops, using Turkish fabrics for that premium, lightweight feel.
+​
+​
+
+</h2>Why Choose Teepees?</h2>
+Unmatched Quality: Handpicked materials that drape beautifully and last.
+
+Trendy Yet Modest: Fusion of crystals, florals, and sleek cuts for every vibe.
+
+Customer First: Fast delivery across Qatar, easy returns, and sizes for all.
+
+Join the Teepees family and redefine modest luxury—one abaya at a time.
+
   </p>
 </section>
 
 <section id="contact">
   <h2>Contact Us</h2>
-  <p>WhatsApp: +91-87591345556</p>
+  <p>WhatsApp: +91-7201816783</p>
 </section>
 
-<div class="cart-btn" onclick="toggleCart()">🛒
-  <div class="cart-count" id="cartCount">0</div>
-</div>
+<section id="checkout">
+  <h2>Checkout</h2>
+  <img src="UPI_QR.png" style="width:220px;margin:20px auto;display:block">
+</section>
 
-<div class="cart-drawer" id="cart">
-  <div style="display:flex;justify-content:space-between">
-    <h3>Your Cart</h3>
-    <span style="cursor:pointer;font-size:20px" onclick="toggleCart()">✕</span>
-  </div>
-  <div id="cartItems"></div>
-</div>
+<section id="admin">
+  <h2>Admin Panel</h2>
+  <p>Admin login & product upload will be added next.</p>
+</section>
 
 <footer>© 2026 The Qatari Abaya by Teepee's</footer>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script>
-firebase.initializeApp({
-  apiKey:"AIzaSyAxJI4LaZu5AQyk4jJ0LTthxCGXQeJBaRQ",
-  authDomain:"qatri-abaya.firebaseapp.com",
-  projectId:"qatri-abaya"
-});
-const db=firebase.firestore();
-</script>
 
 <script src="main.js"></script>
 </body>

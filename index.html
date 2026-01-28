@@ -65,10 +65,25 @@ section.active{display:block}
 }
 .product-thumb{
   width:100%;
-  height:320px;
+  aspect-ratio: 3 / 4;   /* fashion standard */
   object-fit:cover;
   cursor:pointer;
 }
+
+/* Desktop refinement */
+@media (min-width: 900px){
+  .product-thumb{
+    aspect-ratio: 4 / 5;
+  }
+}
+
+/* Mobile compact cards */
+@media (max-width: 600px){
+  .product-thumb{
+    aspect-ratio: 1 / 1.3;
+  }
+}
+
 .product-info{padding:14px}
 .product-info h4{margin-bottom:6px}
 .product-info p{color:var(--maroon);font-weight:700}

@@ -1,4 +1,4 @@
-/* NAVIGATION */
+/* NAV */
 function navigate(id){
   document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -8,16 +8,15 @@ function navigate(id){
 function loginAdmin(e){
   e.preventDefault();
   loginStatus.innerText = "Logging in...";
-
   firebase.auth()
     .signInWithEmailAndPassword(adminEmail.value, adminPassword.value)
-    .then(()=>{
-      loginStatus.innerText = "✅ Login successful";
-    })
-    .catch(err=>{
-      console.error(err);
-      loginStatus.innerText = "❌ " + err.message;
-    });
+    .then(()=> loginStatus.innerText="✅ Login successful")
+    .catch(err=> loginStatus.innerText="❌ "+err.message);
+}
+
+/* CART */
+function toggleCart(){
+  document.getElementById("cart").classList.toggle("open");
 }
 
 /* FIRESTORE */
@@ -29,25 +28,42 @@ db.collection("products")
   .onSnapshot(snapshot=>{
     const grid = document.getElementById("productGrid");
     if(!grid) return;
-
-    grid.innerHTML = "";
-
+    grid.innerHTML="";
     snapshot.forEach(doc=>{
       const p = doc.data();
-
       grid.innerHTML += `
         <div class="product-card">
-          <video src="${p.video}" muted autoplay loop playsinline></video>
+          <video class="product-video"
+            src="${p.video}"
+            muted
+            playsinline
+            preload="metadata"></video>
           <div class="product-info">
             <h4>${p.name}</h4>
             <p>₹${p.price}</p>
           </div>
-        </div>
-      `;
+        </div>`;
     });
+    setupVideoHover();
   });
 
-/* CART */
-function toggleCart(){
-  document.getElementById("cart").classList.toggle("open");
+/* VIDEO HOVER / TAP */
+function setupVideoHover(){
+  document.querySelectorAll(".product-video").forEach(video=>{
+    video.addEventListener("mouseenter",()=>{
+      video.play().catch(()=>{});
+    });
+    video.addEventListener("mouseleave",()=>{
+      video.pause();
+      video.currentTime=0;
+    });
+    video.addEventListener("click",()=>{
+      if(video.paused){
+        video.play().catch(()=>{});
+      }else{
+        video.pause();
+        video.currentTime=0;
+      }
+    });
+  });
 }

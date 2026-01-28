@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Seed Products</title>
+</head>
+<body>
+<h2>Uploading products… check console</h2>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyAxJI4LaZu5AQyk4jJ0LTthxCGXQeJBaRQ",
+  authDomain:"qatri-abaya.firebaseapp.com",
+  projectId:"qatri-abaya"
+});
+
+const db = firebase.firestore();
+
+const products = [];
+
+for(let i=1;i<=46;i++){
+  products.push({
+    name: `Qatari Abaya ${i}`,
+    price: 1899 + (i%5)*200,
+    sizes: ["S","M","L","XL","XXL"],
+    video: `https://res.cloudinary.com/dsdvlwxa4/video/upload/abaya${i}.mp4`,
+    badge: i%4===0 ? "BESTSELLER" : i%3===0 ? "NEW" : "",
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  });
+}
+
+(async ()=>{
+  for(const p of products){
+    await db.collection("products").add(p);
+    console.log("Added:", p.name);
+  }
+  alert("✅ All products uploaded!");
+})();
+</script>
+
+</body>
+</html>

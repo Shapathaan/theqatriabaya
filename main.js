@@ -52,13 +52,13 @@ db.collection("products")
   });
 });
 
-/* VIDEO MODAL (SINGLE PLAYER ONLY) */
+/* VIDEO MODAL */
 function openVideo(src){
   const modal=document.getElementById("videoModal");
   const video=document.getElementById("modalVideo");
-  video.src=src;
   modal.style.display="flex";
-  video.play().catch(()=>{});
+  video.src = src;
+  video.load(); // user taps play (mobile safe)
 }
 
 function closeVideo(){

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Auto Fix Videos</title>
+</head>
+<body>
+<h2>Fixing product videos… open console</h2>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+/* FIREBASE INIT */
+firebase.initializeApp({
+  apiKey:"AIzaSyAxJI4LaZu5AQyk4jJ0LTthxCGXQeJBaRQ",
+  authDomain:"qatri-abaya.firebaseapp.com",
+  projectId:"qatri-abaya"
+});
+const db = firebase.firestore();
+
+/* CLOUDINARY FETCH (PUBLIC API) */
+async function fetchCloudinaryVideos(){
+  const res = await fetch(
+    "https://res.cloudinary.com/dsdvlwxa4/raw/upload/v1/resources/video?max_results=100"
+  );
+  const data = await res.json();
+  return data.resources;
+}
+
+(async ()=>{
+  const videos = await fetchCloudinaryVideos();
+
+  // Map abaya number → secure_url
+  const map = {};
+  videos.forEach(v=>{
+    const m = v.public_id.match(/abaya(\d+)/);
+    if(m){
+      map[m[1]] = v.secure_url;
+    }
+  });
+
+  const snap = await db.collection("products").get();
+
+  let updated = 0;
+
+  for(const doc of snap.docs){
+    const name = doc.data().name;
+    const m = name.match(/Abaya (\d+)/);
+    if(m && map[m[1]]){
+      await doc.ref.update({ video: map[m[1]] });
+      console.log("Updated:", name);
+      updated++;
+    }
+  }
+
+  alert("✅ Videos fixed for " + updated + " products");
+})();
+</script>
+
+</body>
+</html>
